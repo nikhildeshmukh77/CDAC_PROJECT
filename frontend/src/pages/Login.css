@@ -1,0 +1,177 @@
+/* ==========================================
+   GLOBAL STYLES
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+
+/* ==========================================
+   LOGIN LAYOUT
+========================================== */
+
+.login-container {
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 80px;
+  padding: 40px 8%;
+
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   LOGIN FORM
+========================================== */
+
+.login-form {
+  width: 100%;
+  max-width: 450px;
+}
+
+.login-form h1 {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 30px;
+}
+
+.subtitle span {
+  color: #ff4f75;
+  font-style: italic;
+  font-weight: 600;
+}
+
+
+/* ==========================================
+   LABELS
+========================================== */
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.required {
+  color: red;
+  font-size: 10px;
+}
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+input {
+  width: 100%;
+  padding: 14px;
+
+  margin-bottom: 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #1e293b;
+  color: white;
+
+  font-size: 15px;
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+input:focus {
+  outline: 2px solid #fa158b;
+}
+
+
+/* ==========================================
+   PASSWORD
+========================================== */
+
+.password-container {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 35%;
+
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  color: #94a3b8;
+}
+
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+button {
+  width: 100%;
+  padding: 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  background-color: #fa158b;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.login-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-image img {
+  width: 600px;
+  max-width: 100%;
+  height: auto;
+
+  border-radius: 20px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+
+  transition: transform 0.3s ease;
+}
+
+.login-image img:hover {
+  transform: scale(1.02);
+}
