@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import student from "../assets/student.png";
-import Navbar from "../components/Navbar";
+import student from "../../assets/student.png";
+import Navbar from "../../components/Navbar";
+import "../Register/Register"
 import "./Login.css";
 
 function Login() {
@@ -48,7 +49,10 @@ function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <button>Sign In</button>
+          <button>Sign In</button><br/><br/>
+          <div>
+          <a href="/Register/">Don't have account? Register</a>
+        </div>
         </div>
 
         <div className="login-image">
