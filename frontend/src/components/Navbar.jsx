@@ -1,6 +1,7 @@
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import Register from '../pages/Register/Register';
 function Navbar() {
   return (
     <nav>
@@ -15,7 +16,7 @@ function Navbar() {
         <li>About Us</li>
         <li>Contact</li>
         <li>Login</li>
-        <li>Signup</li>
+        <li>Register</li>
         
       </ul>
 

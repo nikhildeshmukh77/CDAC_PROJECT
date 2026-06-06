@@ -125,6 +125,30 @@ input:focus {
 
 
 /* ==========================================
+   LINKS CONTAINER (ADDED FOR SPACE & COLOR)
+========================================== */
+
+.form-links {
+  display: flex;
+  justify-content: space-between; /* Pushes the links to opposite sides */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 24px; /* Creates clean spacing above the login button */
+}
+
+.form-links a {
+  color: #cbd5e1; /* Changes color from raw blue to subtle gray text */
+  font-size: 14px;
+  text-decoration: none; /* Removes default browser underline */
+  transition: color 0.2s ease;
+}
+
+.form-links a:hover {
+  color: #fa158b; /* Highlight shifts cleanly to your signature pink theme on hover */
+}
+
+
+/* ==========================================
    BUTTON
 ========================================== */
 
