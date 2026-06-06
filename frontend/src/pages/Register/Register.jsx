@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import student from "../assets/student.png";
-import Navbar from "../components/Navbar";
+import student from "../../assets/student.png";
+import Navbar from "../../components/Navbar";
+
+import "../Login/Login"
 import "./Register.css"
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -15,6 +19,23 @@ function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleSignUp = async () => {
+    if (password.length < 8) {
+    toast.error("Password must be at least 8 characters long");
+    return;
+  }
+    if (password !== confirmPassword) {
+    toast.error("Passwords do not match");
+    return;
+  }
+    if ( data.status == 'success') {
+      toast.success('Registration Successful')
+      Navigate('/Login')
+    }
+    else
+      toast.error(data.error)
+  }
 
   return (
     <>
@@ -31,7 +52,7 @@ function Register() {
             </span>
           </p>
 
-          {/* Role Selection */}
+          
           <div className="role-container">
             <label className="role-option">
               <input
@@ -58,7 +79,7 @@ function Register() {
             </label>
           </div>
 
-          {/* First Name & Last Name - same line */}
+          
           <div className="field-row">
             <div className="field-group">
               <label>First Name <span className="required">*</span></label>
@@ -88,7 +109,6 @@ function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          {/* Create Password & Confirm Password - same line */}
           <div className="field-row">
             <div className="field-group">
               <label>Create Password <span className="required">*</span></label>
@@ -121,8 +141,14 @@ function Register() {
             </div>
           </div>
 
-          <button>Create Account</button>
+          <button onClick={handleSignUp}>Create Account</button><br/><br/>
+
+          <div>
+          <a href="/">Already have an account? Login</a>
         </div>
+        </div>
+
+        
 
         <div className="login-image">
           <img src={student} alt="Student" />
