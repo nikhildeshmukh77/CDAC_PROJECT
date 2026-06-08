@@ -10,7 +10,7 @@ import "./CoursePlayer.css";
 function CoursePlayer() {
   // Set the default state to a real working link to eliminate the black screen
   const [activeVideoUrl, setActiveVideoUrl] = useState(
-    "https://www.youtube.com/embed/7QjWqMYf7ac?si=O5vnNj7gOimXJKks",
+    "https://www.youtube.com/embed/jmhRD1R8MBw?si=vHJKVuuLiNBTcId4"
   );
 
   return (
