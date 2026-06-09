@@ -6,6 +6,25 @@ import Navbar from "../../components/Navbar";
 import "../Register/Register";
 import "./Login.css";
 
+const handleLogin = async () => {
+
+  try {
+    const response = await loginUser(email, password)
+    if (response.status == 'success') {
+      toast.success('login successful')
+      console.log(response.data)
+      // setuser(response.data)
+      setuser({ phone: response.data.phone })
+      window.sessionStorage.setItem('token', response.data.token)
+      navigate('/home/')
+
+    } else
+      toast.error(response.error)
+  } catch (error) {
+    window.alert(error)
+  }
+}
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +68,8 @@ function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
+          <button onClick={handleLogin}>Sign In</button><br /><br />
+          <div>
           <button>Login</button>
           <br />
           <br />
