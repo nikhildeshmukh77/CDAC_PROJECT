@@ -50,7 +50,7 @@ function Register() {
     const userDetails = { firstName, lastName, email, password, role };
     window.sessionStorage.setItem("registeredUser", JSON.stringify(userDetails));
     window.alert("Registration Successful");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -171,7 +171,7 @@ function Register() {
           </button><br /><br />
 
           <div>
-            <Link to="/">Already have an account? Login</Link>
+            <Link to="/login">Already have an account? Login</Link>
           </div>
         </div>
 

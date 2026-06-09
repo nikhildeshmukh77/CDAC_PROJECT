@@ -1,42 +1,49 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 import student from "../../assets/student.png";
 import Navbar from "../../components/Navbar";
-import "../Register/Register";
 import "./Login.css";
 
-const handleLogin = async () => {
-
-  try {
-    const response = await loginUser(email, password)
-    if (response.status == 'success') {
-      toast.success('login successful')
-      console.log(response.data)
-      // setuser(response.data)
-      setuser({ phone: response.data.phone })
-      window.sessionStorage.setItem('token', response.data.token)
-      navigate('/home/')
-
-    } else
-      toast.error(response.error)
-  } catch (error) {
-    window.alert(error)
-  }
-}
-
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    if (!email || !password) {
+      window.alert("Please enter email and password");
+      return;
+    }
+
+    const storedUser = window.sessionStorage.getItem("registeredUser");
+    const registeredUser = storedUser ? JSON.parse(storedUser) : null;
+
+    if (!registeredUser) {
+      window.alert("Please register first");
+      navigate("/register");
+      return;
+    }
+
+    if (registeredUser.email === email && registeredUser.password === password) {
+      window.sessionStorage.setItem("loggedInUser", JSON.stringify(registeredUser));
+      window.alert("Login successful");
+      navigate("/allcourses");
+    } else {
+      window.alert("Invalid email or password");
+    }
+  };
 
   return (
     <>
       <Navbar />
 
       <div className="login-container">
-        <div className="login-form">
+        <form className="login-form" onSubmit={handleLogin}>
           <h1>Welcome Back</h1>
           <br />
 
@@ -49,7 +56,12 @@ function Login() {
           <label>
             Email Address <span className="required">*</span>
           </label>
-          <input type="email" placeholder="Enter email address" />
+          <input
+            type="email"
+            placeholder="Enter email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label>
             Password <span className="required">*</span>
@@ -59,6 +71,8 @@ function Login() {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <span
@@ -68,17 +82,14 @@ function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <button onClick={handleLogin}>Sign In</button><br /><br />
-          <div>
-          <button>Login</button>
-          <br />
-          <br />
 
           <div className="form-links">
-            <a href="/ForgotPassword">Forgot Password?</a>
-            <a href="/Register/">Don't have account? Register</a>
+            <a href="#">Forgot Password?</a>
+            <Link to="/register">Don't have account? Register</Link>
           </div>
-        </div>
+
+          <button type="submit">Sign In</button>
+        </form>
 
         <div className="login-image">
           <img src={student} alt="Student" />

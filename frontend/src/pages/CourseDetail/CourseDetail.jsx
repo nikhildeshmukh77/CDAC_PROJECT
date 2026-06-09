@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import "./CourseDetail.css";
 
@@ -164,7 +165,9 @@ function CourseDetail() {
               <div className="pricing-body">
                 <p className="price">Rs. {course.price}</p>
 
-                <button className="btn-buy">Buy Now</button>
+                <Link to="/course" className="btn-buy">
+                  Buy Now
+                </Link>
 
                 <button
                   className={`btn-cart ${addedToCart ? "added" : ""}`}
