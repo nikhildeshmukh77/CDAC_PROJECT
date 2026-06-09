@@ -3,8 +3,27 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import student from "../../assets/student.png";
 import Navbar from "../../components/Navbar";
-import "../Register/Register"
+import "../Register/Register";
 import "./Login.css";
+
+const handleLogin = async () => {
+
+  try {
+    const response = await loginUser(email, password)
+    if (response.status == 'success') {
+      toast.success('login successful')
+      console.log(response.data)
+      // setuser(response.data)
+      setuser({ phone: response.data.phone })
+      window.sessionStorage.setItem('token', response.data.token)
+      navigate('/home/')
+
+    } else
+      toast.error(response.error)
+  } catch (error) {
+    window.alert(error)
+  }
+}
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -49,10 +68,16 @@ function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <button>Sign In</button><br/><br/>
+          <button onClick={handleLogin}>Sign In</button><br /><br />
           <div>
-          <a href="/Register/">Don't have account? Register</a>
-        </div>
+          <button>Login</button>
+          <br />
+          <br />
+
+          <div className="form-links">
+            <a href="/ForgotPassword">Forgot Password?</a>
+            <a href="/Register/">Don't have account? Register</a>
+          </div>
         </div>
 
         <div className="login-image">

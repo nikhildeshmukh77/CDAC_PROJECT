@@ -1,48 +1,64 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 import student from "../../assets/student.png";
 import Navbar from "../../components/Navbar";
 
-import "../Login/Login"
-import "./Register.css"
-import { Navigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import "./Register.css";
 
 function Register() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [role, setRole] = useState("student");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSignUp = async () => {
-    if (password.length < 8) {
-    toast.error("Password must be at least 8 characters long");
-    return;
-  }
-    if (password !== confirmPassword) {
-    toast.error("Passwords do not match");
-    return;
-  }
-    if ( data.status == 'success') {
-      toast.success('Registration Successful')
-      Navigate('/Login')
+  const validatePasswords = (pwd, confirmPwd) => {
+    if (!confirmPwd) {
+      setPasswordMessage("");
+      setPasswordsMatch(false);
+      return;
     }
-    else
-      toast.error(data.error)
-  }
+
+    if (pwd === confirmPwd) {
+      setPasswordMessage("Passwords match");
+      setPasswordsMatch(true);
+    } else {
+      setPasswordMessage("Passwords do not match");
+      setPasswordsMatch(false);
+    }
+  };
+
+  const handleSignUp = () => {
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    if (password !== confirmPassword) {
+      window.alert("Passwords do not match");
+      return;
+    }
+
+    const userDetails = { firstName, lastName, email, password, role };
+    window.sessionStorage.setItem("registeredUser", JSON.stringify(userDetails));
+    window.alert("Registration Successful");
+    navigate("/");
+  };
 
   return (
     <>
       <Navbar />
 
-      <div className="login-container">
-        <div className="login-form">
+      <div className="register-container">
+        <div className="register-form">
           <h1>Create Account</h1>
           <br />
 
@@ -52,7 +68,7 @@ function Register() {
             </span>
           </p>
 
-          
+
           <div className="role-container">
             <label className="role-option">
               <input
@@ -79,7 +95,7 @@ function Register() {
             </label>
           </div>
 
-          
+
           <div className="field-row">
             <div className="field-group">
               <label>First Name <span className="required">*</span></label>
@@ -117,7 +133,11 @@ function Register() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setPassword(value);
+                    validatePasswords(value, confirmPassword);
+                  }}
                 />
                 <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -132,7 +152,11 @@ function Register() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Enter Password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setConfirmPassword(value);
+                    validatePasswords(password, value);
+                  }}
                 />
                 <span className="eye-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -140,17 +164,20 @@ function Register() {
               </div>
             </div>
           </div>
+          <p>{passwordMessage}</p>
 
-          <button onClick={handleSignUp}>Create Account</button><br/><br/>
+          <button type="button" onClick={handleSignUp} disabled={!passwordsMatch}>
+            Create Account
+          </button><br /><br />
 
           <div>
-          <a href="/">Already have an account? Login</a>
-        </div>
+            <Link to="/">Already have an account? Login</Link>
+          </div>
         </div>
 
-        
 
-        <div className="login-image">
+
+        <div className="register-image">
           <img src={student} alt="Student" />
         </div>
       </div>
