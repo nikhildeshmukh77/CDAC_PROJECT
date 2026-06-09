@@ -132,6 +132,20 @@
 .register-form button:hover {
   opacity: 0.9;
 }
+
+.register-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.register-form a {
+  color: #ff4f75;
+  text-decoration: none;
+}
+
+.register-form a:hover {
+  text-decoration: underline;
+}
  
  
 /* ==========================================
@@ -252,5 +266,16 @@
  
 .register-image img:hover {
   transform: scale(1.02);
+}
+
+@media (max-width: 700px) {
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .role-container {
+    flex-direction: column;
+  }
 }
  
