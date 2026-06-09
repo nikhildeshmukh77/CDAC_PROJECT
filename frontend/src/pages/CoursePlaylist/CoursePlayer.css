@@ -1,0 +1,45 @@
+.player-page-container {
+  min-height: calc(100vh - 80px);
+  padding: 40px 8%; /* Matched exactly to your login and register page margins */
+  background-color: #0f172a; 
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  
+  /* FIX: Forces the page scrollbar to show up when minimized */
+  overflow-y: auto; 
+}
+
+.learning-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap; /* Prevents wrapping to ensure components stay side-by-side */
+}
+
+.video-viewport-wrapper {
+  flex: 7;
+  min-width: 0; /* Allows video container to scale down smoothly without breaking */
+  background-color: #000000; /* Provides black bars for non-16:9 videos */
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9; /* Keeps video player screen identical in size for all clips */
+}
+
+.sidebar-list-wrapper {
+  flex: 3;
+  min-width: 250px; 
+}
+
+.course-details-section {
+  background: #1e293b;
+  padding: 24px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+}
+
+/* Forces the video element itself to fit inside the fixed 16:9 box correctly */
+.video-viewport-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+}

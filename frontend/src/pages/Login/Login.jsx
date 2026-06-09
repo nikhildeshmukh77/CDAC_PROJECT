@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import student from "../../assets/student.png";
 import Navbar from "../../components/Navbar";
-import "../Register/Register"
+import "../Register/Register";
 import "./Login.css";
 
 const handleLogin = async () => {
@@ -70,6 +70,12 @@ function Login() {
           </div>
           <button onClick={handleLogin}>Sign In</button><br /><br />
           <div>
+          <button>Login</button>
+          <br />
+          <br />
+
+          <div className="form-links">
+            <a href="/ForgotPassword">Forgot Password?</a>
             <a href="/Register/">Don't have account? Register</a>
           </div>
         </div>

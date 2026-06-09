@@ -1,0 +1,37 @@
+/* src/components/CourseSidebar.css */
+
+.sidebar-container {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.sidebar-title {
+  margin-bottom: 15px;
+  color: white;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  padding: 14px;
+  background: #0f172a;
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* This replaces the state tracking logic with pure, standard CSS */
+.sidebar-item:hover {
+  background: #1e293b;
+  border-color: #fa158b;
+  color: #fa158b;
+}

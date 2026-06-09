@@ -5,6 +5,7 @@ import Register from "./pages/Register/Register";
 import Courses from "./pages/Courses/AllCourses";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
+import CoursePlayer from "./pages/CoursePlaylist/CoursePlayer";
 
 function App() {
   return (
@@ -27,3 +28,18 @@ function App() {
 }
 
 export default App;
+    <Routes>
+      
+      <Route path="/" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/course" element={<CoursePlayer />} />
+      {/* <Route path="/Home" element={<Home />} />
+      <Route path="/Courses" element={<Courses />} />
+      <Route path="/AboutUs" element={<About Us />} />
+      <Route path="/Contact" element={<Contact />} /> */}
+    </Routes>
+  </BrowserRouter>
+  )
+}
+
+export default App;"?"
