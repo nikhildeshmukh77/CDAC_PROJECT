@@ -30,16 +30,31 @@
   display: block;
 }
 
-.course-body {
+.course-card-body {
   padding: 18px;
 }
 
-.course-body h3 {
+.course-card-body h3 {
   margin-bottom: 10px;
   font-size: 20px;
 }
 
-.course-body p {
+.course-card-body p {
   margin-bottom: 8px;
   color: #cbd5e1;
+}
+
+.course-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #fa158b;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.course-link:hover {
+  opacity: 0.9;
 }

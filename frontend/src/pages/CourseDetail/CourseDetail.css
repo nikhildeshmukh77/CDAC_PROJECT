@@ -157,6 +157,7 @@
 }
 
 .btn-buy {
+  display: block;
   width: 100%;
   padding: 13px;
   border: none;
@@ -168,6 +169,9 @@
   cursor: pointer;
   transition: 0.3s;
   margin-bottom: 10px;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .btn-buy:hover {
