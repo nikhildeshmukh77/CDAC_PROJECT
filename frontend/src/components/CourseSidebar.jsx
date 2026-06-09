@@ -5,17 +5,17 @@ function CourseSidebar({ onLectureSelect }) {
   { 
     id: 1, 
     title: "01. Introduction to the .Net", 
-    video: "https://www.youtube.com/embed/7QjWqMYf7ac?si=O5vnNj7gOimXJKks" 
+    video: "https://www.youtube.com/embed/jmhRD1R8MBw?si=vHJKVuuLiNBTcId4" 
   },
   { 
     id: 2, 
     title: "02. Setting up the Environment", 
-    video: "https://www.youtube.com/embed/mZUB6nWEIh8?si=d_ghmow8uH_MBwqS" 
+    video: "https://www.youtube.com/embed/D6KAlG-cZUs?si=sK0TiprNBCd5Ov11" 
   },
   { 
     id: 3, 
     title: "03. Architecture Overview", 
-    video: "https://www.youtube.com/embed/MzqNTr0R0ik?si=NxuGkT9lZaRjjfug" 
+    video: "https://www.youtube.com/embed/s38lc9tDatY?si=FkiPzViBQ1yXarjM" 
   }
 ];
 
