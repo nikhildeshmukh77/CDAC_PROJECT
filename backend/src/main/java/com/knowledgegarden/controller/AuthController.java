@@ -7,6 +7,7 @@ import com.knowledgegarden.dto.LoginRequest;
 import com.knowledgegarden.dto.RegisterRequest;
 import com.knowledgegarden.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
