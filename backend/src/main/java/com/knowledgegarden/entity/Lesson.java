@@ -3,35 +3,45 @@ package com.knowledgegarden.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courses")
-public class Course {
+@Table(name = "lessons")
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
     @Column(nullable = false)
     private String title;
 
     private String description;
 
-    private Double price;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id", nullable = false)
-    private User instructor;
+    @Column(name = "s3_key", nullable = false)
+    private String s3Key;
 
-    public Course() {
+    public Lesson() {
     }
 
-    public Course(String title, String description, Double price) {
+    public Lesson(Course course, String title, String description, String s3Key) {
+        this.course = course;
         this.title = title;
         this.description = description;
-        this.price = price;
+        this.s3Key = s3Key;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public String getTitle() {
@@ -50,19 +60,11 @@ public class Course {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getS3Key() {
+        return s3Key;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-    
-    public User getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(User instructor) {
-        this.instructor = instructor;
+    public void setS3Key(String s3Key) {
+        this.s3Key = s3Key;
     }
 }
