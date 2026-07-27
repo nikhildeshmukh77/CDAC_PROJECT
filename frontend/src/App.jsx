@@ -7,6 +7,8 @@ import Courses from "./pages/Courses/AllCourses";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import CoursePlayer from "./pages/CoursePlaylist/CoursePlayer";
+import InstructorDashboard from "./pages/InstructorDashboard/InstructorDashboard";
+
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Contact" element={<Contact />} />
+                <Route path="/instructordashboard" element={<InstructorDashboard />} />
+
+        
       </Routes>
     </BrowserRouter>
   );

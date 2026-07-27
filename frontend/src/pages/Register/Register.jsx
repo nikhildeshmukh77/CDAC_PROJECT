@@ -86,9 +86,9 @@ function Register() {
               <input
                 type="radio"
                 name="role"
-                value="teacher"
-                checked={role === "teacher"}
-                onChange={() => setRole("teacher")}
+                value="instructor"
+                checked={role === "instructor"}
+                onChange={() => setRole("instructor")}
               />
               <span className="role-dot"></span>
               Teacher
