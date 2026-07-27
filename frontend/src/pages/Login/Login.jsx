@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,29 +13,35 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-
+  
     if (!email || !password) {
       window.alert("Please enter email and password");
       return;
     }
-
-    const storedUser = window.sessionStorage.getItem("registeredUser");
-    const registeredUser = storedUser ? JSON.parse(storedUser) : null;
-
-    if (!registeredUser) {
-      window.alert("Please register first");
-      navigate("/register");
-      return;
-    }
-
-    if (registeredUser.email === email && registeredUser.password === password) {
-      window.sessionStorage.setItem("loggedInUser", JSON.stringify(registeredUser));
-      window.alert("Login successful");
-      navigate("/allcourses");
-    } else {
-      window.alert("Invalid email or password");
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:9999/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+  
+      if (response.data === "Login successful") {
+        window.alert("Login successful");
+  
+        sessionStorage.setItem("userEmail", email);
+  
+        navigate("/allcourses");
+      } else {
+        window.alert(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+      window.alert("Unable to connect to server");
     }
   };
 

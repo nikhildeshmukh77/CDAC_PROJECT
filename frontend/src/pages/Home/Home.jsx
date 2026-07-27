@@ -12,7 +12,8 @@ function Home() {
         <section className="home-hero">
           <div className="home-content">
             <p className="home-tag">Online Learning Platform</p>
-            <h1>Welcome to KnowledgeGarden</h1>
+            <h1>Welcome to </h1>
+            <h1>KnowledgeGarden</h1>
             <p>
               A simple place for students and teachers to explore courses,
               learn new skills, and manage academic learning in one platform.
