@@ -2,15 +2,14 @@ package com.knowledgegarden.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.knowledgegarden.dto.CourseRequest;
+import com.knowledgegarden.dto.CourseResponse;
 import com.knowledgegarden.entity.Course;
 import com.knowledgegarden.service.CourseService;
 
@@ -19,31 +18,47 @@ import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/api")
 @Transactional
-@RequiredArgsConstructor
 public class CourseController {
 
-	private final CourseService courseService;
-	
-	@GetMapping("/instructor/{instructorId}")
-	public List<Course> getCoursesByInstructor(@PathVariable Long instructorId){
-		return courseService.getCoursesByInstructor(instructorId);
-		
-	}
-	
-	@GetMapping("/{courseId}")
-	public Course getCourseById(@PathVariable Long courseId) {
-	    return courseService.getCourseById(courseId);
-	}
-	
-	@PutMapping("/{courseId}")
-	public Course updateCourse(@PathVariable Long courseId, @RequestBody Course course) {
-		return courseService.updateCourse(courseId, course);
-	}
-	
-	@DeleteMapping("/{courseId}")
-	public String deleteCourse(@PathVariable Long courseId) {
-		return courseService.deleteCourse(courseId);
-	}
+    private final CourseService courseService;
+    
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    @GetMapping("/courses/instructor/{instructorId}")
+    public List<Course> getCoursesByInstructor(@PathVariable Long instructorId) {
+        return courseService.getCoursesByInstructor(instructorId);
+    }
+
+    @GetMapping("/courses/{courseId}")
+    public Course getCourseById(@PathVariable Long courseId) {
+        return courseService.getCourseById(courseId);
+    }
+
+    @PutMapping("/courses/{courseId}")
+    public Course updateCourse(@PathVariable Long courseId,
+                               @RequestBody Course course) {
+        return courseService.updateCourse(courseId, course);
+    }
+
+    @DeleteMapping("/courses/{courseId}")
+    public String deleteCourse(@PathVariable Long courseId) {
+        return courseService.deleteCourse(courseId);
+    }
+
+    @PostMapping(value = "/instructor/courses",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CourseResponse> createCourse(
+            @RequestPart("course") CourseRequest courseRequest,
+            @RequestPart("videos") List<MultipartFile> videos,
+            Authentication authentication) {
+
+        CourseResponse response =
+                courseService.createCourse(courseRequest, videos, authentication);
+
+        return ResponseEntity.ok(response);
+    }
 }
