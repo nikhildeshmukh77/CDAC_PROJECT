@@ -21,7 +21,7 @@ function EditCourse() {
       // Since you don't have GET by courseId,
       // get all courses of instructor and find the selected one
     const response = await axios.get(
-    `http://localhost:9999/api/courses/${id}`
+    `http://localhost:9998/api/courses/${id}`
 );
 
 setCourse(response.data);
@@ -42,7 +42,7 @@ setCourse(response.data);
 
     try {
       await axios.put(
-        `http://localhost:9999/api/courses/${id}`,
+        `http://localhost:9998/api/courses/${id}`,
         course
       );
 

@@ -15,7 +15,7 @@ function InstructorDashboard() {
   const fetchCourses = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:9999/api/courses/instructor/3"
+        "http://localhost:9998/api/courses/instructor/3"
       );
 
       console.log("Response Data:", response.data);
@@ -48,7 +48,7 @@ function InstructorDashboard() {
   try {
 
     await axios.delete(
-      `http://localhost:9999/api/courses/${courseId}`
+      `http://localhost:9998/api/courses/${courseId}`
     );
 
     alert("Course deleted successfully.");
