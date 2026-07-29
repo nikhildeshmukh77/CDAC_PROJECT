@@ -9,6 +9,7 @@ import Contact from "./pages/Contact/Contact";
 import CoursePlayer from "./pages/CoursePlaylist/CoursePlayer";
 import InstructorDashboard from "./pages/InstructorDashboard/InstructorDashboard";
 import EditCourse from "./pages/EditCourse/EditCourse";
+import InstructorCourseUpload from "./pages/Instructor/InstructorCourseUpload";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
     element={<EditCourse />}
 /> */}
         
+        <Route path="/upload" element={<InstructorCourseUpload/>}/>
       </Routes>
     </BrowserRouter>
   );

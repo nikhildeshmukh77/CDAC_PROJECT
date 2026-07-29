@@ -1,0 +1,193 @@
+/* Instructor Course Upload — dark theme, centered card */
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0d1526;
+  padding: 3rem 1rem;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 720px;
+  background-color: #0d1526;
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  color: #e7ebf3;
+}
+
+.form-header h1 {
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: #9aa4b8;
+  margin-bottom: 1.75rem;
+}
+
+.section {
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.field label,
+.form-label {
+  display: block;
+  color: #c3cad9;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Inputs & textareas */
+.form-card .form-control {
+  background-color: #182238;
+  border: 1px solid #2a3550;
+  color: #e7ebf3;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+}
+
+.form-card .form-control::placeholder {
+  color: #6b7590;
+}
+
+.form-card .form-control:focus {
+  background-color: #182238;
+  border-color: #ec1671;
+  color: #e7ebf3;
+  box-shadow: 0 0 0 0.2rem rgba(236, 22, 113, 0.25);
+}
+
+.form-card textarea.form-control {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.field-half {
+  max-width: 320px;
+}
+
+.price-wrap .input-group-text {
+  background-color: #182238;
+  border: 1px solid #2a3550;
+  color: #c3cad9;
+}
+
+/* Lessons header */
+.lessons-header {
+  margin-bottom: 1rem;
+}
+
+/* Pink buttons */
+.btn-add-lesson,
+.btn-submit {
+  background-color: #ec1671;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+}
+
+.btn-add-lesson:hover,
+.btn-submit:hover {
+  background-color: #d3115f;
+  color: #ffffff;
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+}
+
+/* Lesson card */
+.lesson-card {
+  background-color: #131c30;
+  border: 1px solid #232e48;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.lesson-card-header {
+  margin-bottom: 1rem;
+}
+
+.lesson-num {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: #9aa4b8;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.btn-remove:hover {
+  color: #ec1671;
+}
+
+/* Video upload box */
+.video-upload-box {
+  border: 1.5px dashed #2a3550;
+  border-radius: 10px;
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+  color: #9aa4b8;
+  background-color: #182238;
+  transition: border-color 0.15s ease;
+}
+
+.video-upload-box:hover {
+  border-color: #ec1671;
+}
+
+.upload-icon {
+  font-size: 1.5rem;
+  color: #9aa4b8;
+  margin-bottom: 0.25rem;
+}
+
+.video-selected {
+  background-color: #182238;
+  border: 1px solid #2a3550;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  color: #e7ebf3;
+}
+
+.btn-change {
+  background-color: transparent;
+  border: 1px solid #2a3550;
+  color: #e7ebf3;
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.btn-change:hover {
+  border-color: #ec1671;
+  color: #ec1671;
+}
+
+/* Footer messages */
+.error-msg {
+  color: #ff6b8a;
+  margin-bottom: 0.75rem;
+}
+
+.success-msg {
+  color: #4ade80;
+  margin-bottom: 0.75rem;
+}
