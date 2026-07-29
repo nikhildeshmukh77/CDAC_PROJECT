@@ -8,7 +8,7 @@ import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import CoursePlayer from "./pages/CoursePlaylist/CoursePlayer";
 import InstructorDashboard from "./pages/InstructorDashboard/InstructorDashboard";
-
+import EditCourse from "./pages/EditCourse/EditCourse";
 
 function App() {
   return (
@@ -27,8 +27,12 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Contact" element={<Contact />} />
-                <Route path="/instructordashboard" element={<InstructorDashboard />} />
-
+         <Route path="/instructordashboard" element={<InstructorDashboard />} />
+         <Route path="/editcourse/:id" element={<EditCourse/>}/>
+{/* <Route
+    path="/editcourse/:id"
+    element={<EditCourse />}
+/> */}
         
       </Routes>
     </BrowserRouter>
