@@ -36,6 +36,16 @@ function Login() {
         sessionStorage.setItem("userEmail", email);
   
         navigate("/allcourses");
+// const user = response.data;
+// sessionStorage.setItem("loggedInUser",JSON.stringify(user));
+//     window.alert("Login Successful");
+
+//     if(user.role === "INSTRUCTOR"){
+//       navigate("/instructordashboard");
+//     }else{
+//       navigate("/allcourses");
+//     }
+
       } else {
         window.alert(response.data);
       }
