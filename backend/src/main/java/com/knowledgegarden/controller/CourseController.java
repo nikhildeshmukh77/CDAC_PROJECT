@@ -8,13 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.knowledgegarden.dto.CoursePlayerResponse;
 import com.knowledgegarden.dto.CourseRequest;
 import com.knowledgegarden.dto.CourseResponse;
+import com.knowledgegarden.dto.CourseSummaryResponse;
 import com.knowledgegarden.entity.Course;
 import com.knowledgegarden.service.CourseService;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,10 +24,28 @@ import lombok.RequiredArgsConstructor;
 public class CourseController {
 
     private final CourseService courseService;
-    
+
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
+
+    // ===========================
+    // Public APIs
+    // ===========================
+
+    @GetMapping("/courses")
+    public List<CourseSummaryResponse> getAllCourses() {
+        return courseService.getAllCourses();
+    }
+
+    @GetMapping("/courses/player/{courseId}")
+    public CoursePlayerResponse getCoursePlayer(@PathVariable Long courseId) {
+        return courseService.getCoursePlayer(courseId);
+    }
+
+    // ===========================
+    // Instructor APIs
+    // ===========================
 
     @GetMapping("/courses/instructor/{instructorId}")
     public List<Course> getCoursesByInstructor(@PathVariable Long instructorId) {
@@ -49,7 +68,8 @@ public class CourseController {
         return courseService.deleteCourse(courseId);
     }
 
-    @PostMapping(value = "/instructor/courses",
+    @PostMapping(
+            value = "/instructor/courses",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CourseResponse> createCourse(
             @RequestPart("course") CourseRequest courseRequest,

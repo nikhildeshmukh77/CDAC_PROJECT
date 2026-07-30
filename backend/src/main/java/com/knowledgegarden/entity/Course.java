@@ -1,6 +1,10 @@
 package com.knowledgegarden.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -16,10 +20,18 @@ public class Course {
     private String description;
 
     private Double price;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id", nullable = false)
     private User instructor;
+
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JsonManagedReference
+    private List<Lesson> lessons = new ArrayList<>();
 
     public Course() {
     }
@@ -57,12 +69,20 @@ public class Course {
     public void setPrice(Double price) {
         this.price = price;
     }
-    
+
     public User getInstructor() {
         return instructor;
     }
 
     public void setInstructor(User instructor) {
         this.instructor = instructor;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.knowledgegarden.dto.CoursePlayerResponse;
 import com.knowledgegarden.dto.CourseRequest;
 import com.knowledgegarden.dto.CourseResponse;
+import com.knowledgegarden.dto.CourseSummaryResponse;
 import com.knowledgegarden.entity.Course;
+
 
 public interface CourseService {
 
@@ -23,4 +26,8 @@ public interface CourseService {
             CourseRequest courseRequest,
             List<MultipartFile> videos,
             Authentication authentication);
+    
+    List<CourseSummaryResponse> getAllCourses();
+
+    CoursePlayerResponse getCoursePlayer(Long courseId);
 }

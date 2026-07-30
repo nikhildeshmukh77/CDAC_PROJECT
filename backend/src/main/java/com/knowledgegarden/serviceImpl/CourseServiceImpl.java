@@ -22,10 +22,13 @@ import com.knowledgegarden.entity.Lesson;
 import com.knowledgegarden.entity.User;
 import com.knowledgegarden.repository.UserRepository;
 import com.knowledgegarden.service.S3Service;
+import java.util.stream.Collectors;
 
+import com.knowledgegarden.dto.CoursePlayerResponse;
+import com.knowledgegarden.dto.CourseSummaryResponse;
+import com.knowledgegarden.dto.LessonResponse;
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
 	
@@ -34,6 +37,18 @@ public class CourseServiceImpl implements CourseService {
 
 	private final UserRepository userRepository;
 	private final S3Service s3Service;
+	
+	public CourseServiceImpl(
+	        CourseRepository courseRepository,
+	        LessonRepository lessonRepository,
+	        UserRepository userRepository,
+	        S3Service s3Service) {
+
+	    this.courseRepository = courseRepository;
+	    this.lessonRepository = lessonRepository;
+	    this.userRepository = userRepository;
+	    this.s3Service = s3Service;
+	}
 
 	@Override
 	public List<Course> getCoursesByInstructor(Long instructorId) {
@@ -123,4 +138,42 @@ public CourseResponse createCourse(
             "Course created successfully",
             lessonRequests.size());
 }
+	
+	public List<CourseSummaryResponse> getAllCourses() {
+
+	    List<Course> courses = courseRepository.findAll();
+
+	    return courses.stream()
+	            .map(course -> new CourseSummaryResponse(
+	                    course.getId(),
+	                    course.getTitle(),
+	                    course.getDescription(),
+	                    course.getPrice(),
+	                    course.getInstructor() != null
+	                    ? course.getInstructor().getName()
+	                    : null))
+	            .collect(Collectors.toList());
+	}
+	
+	public CoursePlayerResponse getCoursePlayer(Long courseId) {
+
+	    Course course = courseRepository.findById(courseId)
+	            .orElseThrow(() -> new RuntimeException("Course not found"));
+
+	    List<Lesson> lessons = lessonRepository.findByCourse_Id(courseId);
+
+	    List<LessonResponse> lessonResponses = lessons.stream()
+	            .map(lesson -> new LessonResponse(
+	                    lesson.getId(),
+	                    lesson.getTitle(),
+	                    lesson.getDescription(),
+	                    lesson.getS3Key()))
+	            .collect(Collectors.toList());
+
+	    return new CoursePlayerResponse(
+	            course.getId(),
+	            course.getTitle(),
+	            course.getDescription(),
+	            lessonResponses);
+	}
 }
