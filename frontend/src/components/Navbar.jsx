@@ -1,8 +1,37 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
 import "./Navbar.css";
 
+function decodeToken(token) {
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
+}
+
 function Navbar() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decoded = decodeToken(token);
+      setUser(decoded);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("userEmail");
+    setUser(null);
+    navigate("/login");
+  };
+
   return (
     <nav>
       <Link to="/" className="logo-section">
@@ -15,8 +44,22 @@ function Navbar() {
         <li><Link to="/allcourses">Courses</Link></li>
         <li><Link to="/about">About Us</Link></li>
         <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/register">Register</Link></li>
+
+        {user && user.user_role === "INSTRUCTOR" && (
+          <li><Link to="/instructordashboard">Dashboard</Link></li>
+        )}
+
+        {user ? (
+          <>
+            <li>Hi, {user.sub}</li>
+            <li><button onClick={handleLogout}>Logout</button></li>
+          </>
+        ) : (
+          <>
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/register">Register</Link></li>
+          </>
+        )}
       </ul>
     </nav>
   );

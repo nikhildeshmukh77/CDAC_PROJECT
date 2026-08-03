@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Instructorcourseupload.css";
+import apiClient from "../../services/apiClient";
 
 const newLesson = () => ({
   _id: crypto.randomUUID(),
@@ -110,17 +111,7 @@ export default function InstructorCourseUpload() {
 
 
 
-      const response = await fetch(
-        "http://localhost:9998/api/instructor/courses",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
-
-      if (!response.ok)
-        throw new Error("Failed to create course");
+      await apiClient.post("/instructor/courses", formData);
 
 
       setSuccess(true);

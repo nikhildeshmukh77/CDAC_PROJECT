@@ -24,10 +24,19 @@ function App() {
         <Route path="/AllCourses" element={<Courses />} />
         <Route path="/course/:id" element={<CourseDetail />} />
         <Route path="/course/player/:courseId" element={<CoursePlayer />} />
+        <Route path="/course" element={<CoursePlayer />} />
         <Route path="/about" element={<About />} />
         <Route path="/About" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/instructordashboard" element={<InstructorDashboard />} />
+        <Route path="/editcourse/:id" element={<EditCourse />} />
+        {/* <Route
+    path="/editcourse/:id"
+    element={<EditCourse />}
+/> */}
+
+        <Route path="/upload" element={<InstructorCourseUpload />} />
          <Route path="/instructordashboard" element={<InstructorDashboard />} />
          <Route path="/editcourse/:id" element={<EditCourse/>}/>
 {/* <Route

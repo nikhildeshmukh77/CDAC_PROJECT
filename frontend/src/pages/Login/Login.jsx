@@ -15,45 +15,44 @@ function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-  
+
     if (!email || !password) {
       window.alert("Please enter email and password");
       return;
     }
-  
+
     try {
       const response = await axios.post(
-        "http://localhost:9998/api/auth/login",
+        "http://localhost:9997/api/auth/login",
         {
           email,
           password,
         }
       );
-  
-      if (response.data === "Login successful") {
-        window.alert("Login successful");
-  
+
+      const token = response.data;
+
+      // a real JWT always has 3 dot-separated segments
+      if (typeof token === "string" && token.split(".").length === 3) {
+        localStorage.setItem("token", token);
         sessionStorage.setItem("userEmail", email);
-  
-        navigate("/allcourses");
-// const user = response.data;
-// sessionStorage.setItem("loggedInUser",JSON.stringify(user));
-//     window.alert("Login Successful");
 
-//     if(user.role === "INSTRUCTOR"){
-//       navigate("/instructordashboard");
-//     }else{
-//       navigate("/allcourses");
-//     }
+        const payload = JSON.parse(atob(token.split(".")[1]));
 
+        if (payload.user_role === "INSTRUCTOR") {
+          navigate("/instructordashboard");
+        } else {
+          navigate("/allcourses");
+        }
       } else {
-        window.alert(response.data);
+        // backend returned an error string like "Invalid password" / "User not found"
+        window.alert(token);
       }
     } catch (error) {
       console.error(error);
       window.alert("Unable to connect to server");
     }
-  };
+};
 
   return (
     <>

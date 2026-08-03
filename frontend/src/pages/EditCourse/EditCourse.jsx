@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../../services/apiClient";
 
 function EditCourse() {
   const { id } = useParams();
@@ -13,22 +13,17 @@ function EditCourse() {
   });
 
   useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const response = await apiClient.get(`/courses/${id}`);
+        setCourse(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchCourse();
-  }, []);
-
-  const fetchCourse = async () => {
-    try {
-      // Since you don't have GET by courseId,
-      // get all courses of instructor and find the selected one
-    const response = await axios.get(
-    `http://localhost:9998/api/courses/${id}`
-);
-
-setCourse(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [id]);
 
   const handleChange = (e) => {
     setCourse({
@@ -41,10 +36,7 @@ setCourse(response.data);
     e.preventDefault();
 
     try {
-      await axios.put(
-        `http://localhost:9998/api/courses/${id}`,
-        course
-      );
+      await apiClient.put(`/courses/${id}`, course);
 
       alert("Course Updated Successfully");
 

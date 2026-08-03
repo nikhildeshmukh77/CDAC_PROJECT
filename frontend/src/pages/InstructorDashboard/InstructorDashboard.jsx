@@ -1,16 +1,31 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import apiClient from "../../services/apiClient";
 
 import Navbar from "../../components/Navbar";
 import "./InstructorDashboard.css";
 
-function InstructorDashboard() {
-  const navigate = useNavigate();
+function getTokenClaims() {
+  const token = localStorage.getItem("token");
 
-  const [instructorName, setInstructorName] = useState("");
+  if (!token) return null;
+
+  try {
+    return JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+  } catch {
+    return null;
+  }
+}
+
+function InstructorDashboard() {
   const [courses, setCourses] = useState([]);
+  const instructorName = sessionStorage.getItem("userEmail") || "Instructor";
+
+  const getCourses = useCallback(async (instructorId) => {
+    const response = await apiClient.get(`/courses/instructor/${instructorId}`);
+    return response.data;
+  }, []);
 
   const fetchCourses = async () => {
     try {
@@ -27,13 +42,27 @@ function InstructorDashboard() {
   };
 
   useEffect(() => {
-    const storedUser = window.sessionStorage.getItem("loggedInUser");
-    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+    let active = true;
 
-    setInstructorName(loggedInUser ? loggedInUser.name : "Instructor");
+    const loadCourses = async () => {
+      const claims = getTokenClaims();
 
-    fetchCourses();
-  }, [navigate]);
+      if (!claims?.user_id) return;
+
+      try {
+        const data = await getCourses(claims.user_id);
+        if (active) setCourses(data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    loadCourses();
+
+    return () => {
+      active = false;
+    };
+  }, [getCourses]);
 
   const handleDelete = async (courseId) => {
 
@@ -47,13 +76,15 @@ function InstructorDashboard() {
 
   try {
 
-    await axios.delete(
-      `http://localhost:9998/api/courses/${courseId}`
-    );
+    await apiClient.delete(`/courses/${courseId}`);
 
     alert("Course deleted successfully.");
 
-    fetchCourses();
+    const claims = getTokenClaims();
+    if (claims?.user_id) {
+      const data = await getCourses(claims.user_id);
+      setCourses(data);
+    }
 
   } catch (error) {
 
@@ -85,7 +116,7 @@ function InstructorDashboard() {
               </p>
             </div>
 
-            <Link to="/addcourse">
+            <Link to="/upload">
               <button className="add-course-btn">
                 <FaPlus /> Add New Course
               </button>

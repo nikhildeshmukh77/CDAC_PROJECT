@@ -7,19 +7,22 @@ import com.knowledgegarden.dto.LoginRequest;
 import com.knowledgegarden.dto.RegisterRequest;
 import com.knowledgegarden.entity.User;
 import com.knowledgegarden.repository.UserRepository;
+import com.knowledgegarden.util.JwtUtil;
+import com.knowledgegarden.util.CustomUserDetailsImpl;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
-
     public String register(RegisterRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -29,9 +32,9 @@ public class UserService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-
-        
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        user.setRole(request.getRole());
 
         userRepository.save(user);
 
@@ -48,11 +51,13 @@ public class UserService {
             return "User not found";
         }
 
-        
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return "Invalid password";
         }
 
-        return "Login successful";
+        CustomUserDetailsImpl userDetails = new CustomUserDetailsImpl(
+                user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getRole());
+
+        return jwtUtil.generateJWT(userDetails);
     }
 }

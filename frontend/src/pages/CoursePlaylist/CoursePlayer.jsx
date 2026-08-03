@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/Navbar";
 import VideoPlayer from "../../components/VideoPlayer";
@@ -19,65 +19,43 @@ function CoursePlayer() {
   const [lessons, setLessons] = useState([]);
   const [activeVideoUrl, setActiveVideoUrl] = useState("");
 
-
-  useEffect(() => {
-
-    loadCourse();
-
-  }, [courseId]);
-
-
-
   const loadCourse = async () => {
-
     try {
-
       const data = await getCoursePlayer(courseId);
 
-
       setCourse(data);
-
       setLessons(data.lessons);
 
-
-
       if (data.lessons && data.lessons.length > 0) {
-
-        setActiveVideoUrl(
-          data.lessons[0].s3Key
-        );
-
+        setActiveVideoUrl(data.lessons[0].s3Key);
       }
-
-
-    } catch (error) {
-
-      console.error(
-        "Error loading course:",
-        error
-      );
-
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
+        navigate("/login", { state: { message: "Please log in to access this course." } });
+      } else {
+        console.error("Error loading course:", err);
+      }
     }
-
   };
 
-
+  useEffect(() => {
+    loadCourse();
+  }, [courseId]);
 
   if (!course) {
-
-    return <h2>Loading...</h2>;
-
+    return (
+      <>
+        <Navbar />
+        <h2 style={{ padding: "30px" }}>Loading...</h2>
+      </>
+    );
   }
-
-
 
   return (
 
     <>
 
       <Navbar />
-
-
       <div className="player-page-container">
 
 
@@ -96,24 +74,12 @@ function CoursePlayer() {
 
 
           <div className="sidebar-list-wrapper">
-
-
             <CourseSidebar
-
               lessons={lessons}
-
-
-              onLectureSelect={(lesson)=>{
-
-                setActiveVideoUrl(
-                  lesson.s3Key
-                );
-
+              onLectureSelect={(lesson) => {
+                setActiveVideoUrl(lesson.s3Key);
               }}
-
             />
-
-
           </div>
 
 
@@ -125,11 +91,7 @@ function CoursePlayer() {
 
 
         <div className="course-details-section">
-
-
-          <CourseInfo course={course}/>
-
-
+          <CourseInfo course={course} />
         </div>
 
 
@@ -143,6 +105,5 @@ function CoursePlayer() {
   );
 
 }
-
 
 export default CoursePlayer;

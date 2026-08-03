@@ -1,12 +1,23 @@
 package com.knowledgegarden.dto;
 
+import com.knowledgegarden.entity.Role;
+
 public class RegisterRequest {
 
     private String name;
     private String email;
     private String password;
+    private Role role;
 
-    public RegisterRequest() {
+    public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public RegisterRequest() {
     }
 
     public String getName() {
