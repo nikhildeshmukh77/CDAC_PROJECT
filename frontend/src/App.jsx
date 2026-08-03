@@ -8,7 +8,8 @@ import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import CoursePlayer from "./pages/CoursePlaylist/CoursePlayer";
 import InstructorDashboard from "./pages/InstructorDashboard/InstructorDashboard";
-
+import EditCourse from "./pages/EditCourse/EditCourse";
+import InstructorCourseUpload from "./pages/Instructor/InstructorCourseUpload";
 
 function App() {
   return (
@@ -22,14 +23,20 @@ function App() {
         <Route path="/allcourses" element={<Courses />} />
         <Route path="/AllCourses" element={<Courses />} />
         <Route path="/course/:id" element={<CourseDetail />} />
+        <Route path="/course/player/:courseId" element={<CoursePlayer />} />
         <Route path="/course" element={<CoursePlayer />} />
         <Route path="/about" element={<About />} />
         <Route path="/About" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Contact" element={<Contact />} />
-                <Route path="/instructordashboard" element={<InstructorDashboard />} />
+        <Route path="/instructordashboard" element={<InstructorDashboard />} />
+        <Route path="/editcourse/:id" element={<EditCourse />} />
+        {/* <Route
+    path="/editcourse/:id"
+    element={<EditCourse />}
+/> */}
 
-        
+        <Route path="/upload" element={<InstructorCourseUpload />} />
       </Routes>
     </BrowserRouter>
   );

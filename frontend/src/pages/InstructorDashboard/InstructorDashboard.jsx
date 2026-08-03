@@ -1,46 +1,86 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import apiClient from "../../services/apiClient";
 
 import Navbar from "../../components/Navbar";
 import "./InstructorDashboard.css";
 
+function getTokenClaims() {
+  const token = localStorage.getItem("token");
+
+  if (!token) return null;
+
+  try {
+    return JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+  } catch {
+    return null;
+  }
+}
+
 function InstructorDashboard() {
-  const navigate = useNavigate();
-  const [instructorName, setInstructorName] = useState("");
   const [courses, setCourses] = useState([]);
+  const instructorName = sessionStorage.getItem("userEmail") || "Instructor";
+
+  const getCourses = useCallback(async (instructorId) => {
+    const response = await apiClient.get(`/courses/instructor/${instructorId}`);
+    return response.data;
+  }, []);
 
   useEffect(() => {
-    const storedUser = window.sessionStorage.getItem("loggedInUser");
-    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+    let active = true;
 
-    // if (!loggedInUser) {
-    //   window.alert("Please login first");
-    //   navigate("/login");
-    //   return;
-    // }
+    const loadCourses = async () => {
+      const claims = getTokenClaims();
 
-    // setInstructorName(loggedInUser.name);
-     setInstructorName(loggedInUser ? loggedInUser.name : "Instructor");
+      if (!claims?.user_id) return;
 
-    const storedCourses = window.sessionStorage.getItem("instructorCourses");
-    const parsedCourses = storedCourses ? JSON.parse(storedCourses) : [];
-    setCourses(parsedCourses);
-  }, [navigate]);
+      try {
+        const data = await getCourses(claims.user_id);
+        if (active) setCourses(data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
 
-  const handleDelete = (courseId) => {
-    const confirmDelete = window.confirm("Delete this course?");
-    if (!confirmDelete) {
-      return;
+    loadCourses();
+
+    return () => {
+      active = false;
+    };
+  }, [getCourses]);
+
+  const handleDelete = async (courseId) => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this course?"
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+
+    await apiClient.delete(`/courses/${courseId}`);
+
+    alert("Course deleted successfully.");
+
+    const claims = getTokenClaims();
+    if (claims?.user_id) {
+      const data = await getCourses(claims.user_id);
+      setCourses(data);
     }
 
-    const updatedCourses = courses.filter((course) => course.id !== courseId);
-    setCourses(updatedCourses);
-    window.sessionStorage.setItem(
-      "instructorCourses",
-      JSON.stringify(updatedCourses)
-    );
-  };
+  } catch (error) {
+
+    console.error("Error deleting course:", error);
+    alert("Failed to delete course.");
+
+  }
+
+};
+
 
   return (
     <>
@@ -57,10 +97,12 @@ function InstructorDashboard() {
           <div className="dashboard-header">
             <div>
               <h2>Welcome back, {instructorName}</h2>
-              <p className="subtitle">Here's how your courses are performing</p>
+              <p className="subtitle">
+                Here's how your courses are performing
+              </p>
             </div>
 
-            <Link to="/addcourse">
+            <Link to="/upload">
               <button className="add-course-btn">
                 <FaPlus /> Add New Course
               </button>
@@ -75,10 +117,11 @@ function InstructorDashboard() {
                 <th>Course</th>
                 <th>Students</th>
                 <th>Rating</th>
-                <th>Status</th>
+                <th>Price</th>
                 <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {courses.length === 0 ? (
                 <tr>
@@ -88,17 +131,18 @@ function InstructorDashboard() {
                 courses.map((course) => (
                   <tr key={course.id}>
                     <td>{course.title}</td>
+
                     <td>{course.studentsEnrolled}</td>
+
                     <td>{course.rating}</td>
-                    <td>
-                      <span className={`status ${course.status}`}>
-                        {course.status}
-                      </span>
-                    </td>
+
+                    <td>₹ {course.price}</td>
+
                     <td className="actions">
                       <Link to={`/editcourse/${course.id}`}>
                         <FaEdit className="icon" />
                       </Link>
+
                       <FaTrash
                         className="icon"
                         onClick={() => handleDelete(course.id)}

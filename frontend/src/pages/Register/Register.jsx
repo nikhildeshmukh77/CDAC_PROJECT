@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import student from "../../assets/student.png";
 import Navbar from "../../components/Navbar";
@@ -9,8 +10,7 @@ import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,21 +37,43 @@ function Register() {
     }
   };
 
-  const handleSignUp = () => {
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      window.alert("Please fill all required fields");
-      return;
-    }
-    if (password !== confirmPassword) {
-      window.alert("Passwords do not match");
-      return;
-    }
+  const handleSignUp = async () => {
+  if (!name || !email || !password || !confirmPassword) {
+    alert("Please fill all required fields");
+    return;
+  }
 
-    const userDetails = { firstName, lastName, email, password, role };
-    window.sessionStorage.setItem("registeredUser", JSON.stringify(userDetails));
-    window.alert("Registration Successful");
-    navigate("/login");
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  const userDetails = {
+    name,
+    email,
+    password,
+    role: role.toUpperCase(), // STUDENT or INSTRUCTOR
   };
+
+  try {
+    const response = await axios.post(
+      "http://localhost:9997/api/auth/register",
+      userDetails
+    );
+
+    alert(response.data);
+    navigate("/login");
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      alert(error.response.data);
+    } else {
+      alert("Unable to connect to server");
+    }
+  }
+};
 
   return (
     <>
@@ -98,15 +120,15 @@ function Register() {
 
           <div className="field-row">
             <div className="field-group">
-              <label>First Name <span className="required">*</span></label>
+              <label>Name <span className="required">*</span></label>
               <input
                 type="text"
-                placeholder="Enter first name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="field-group">
+            {/* <div className="field-group">
               <label>Last Name <span className="required">*</span></label>
               <input
                 type="text"
@@ -114,7 +136,7 @@ function Register() {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
-            </div>
+            </div> */}
           </div>
 
           <label>Email Address <span className="required">*</span></label>
