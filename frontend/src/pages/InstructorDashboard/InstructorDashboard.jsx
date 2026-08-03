@@ -27,6 +27,20 @@ function InstructorDashboard() {
     return response.data;
   }, []);
 
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:9998/api/courses/instructor/3"
+      );
+
+      console.log("Response Data:", response.data);
+
+      setCourses(response.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
   useEffect(() => {
     let active = true;
 

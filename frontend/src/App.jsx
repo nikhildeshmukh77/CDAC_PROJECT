@@ -37,6 +37,14 @@ function App() {
 /> */}
 
         <Route path="/upload" element={<InstructorCourseUpload />} />
+         <Route path="/instructordashboard" element={<InstructorDashboard />} />
+         <Route path="/editcourse/:id" element={<EditCourse/>}/>
+{/* <Route
+    path="/editcourse/:id"
+    element={<EditCourse />}
+/> */}
+        
+        <Route path="/upload" element={<InstructorCourseUpload/>}/>
       </Routes>
     </BrowserRouter>
   );

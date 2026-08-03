@@ -22,21 +22,31 @@ function StarRating({ rating }) {
 
 
 function AccordionItem({ lesson, isOpen, onToggle }) {
+
   return (
     <div className="accordion-item">
+
       <button
         className={`accordion-header ${isOpen ? "open" : ""}`}
         onClick={onToggle}
       >
+
         <div className="accordion-left">
+
           <span className={`accordion-arrow ${isOpen ? "rotated" : ""}`}>
             ▸
           </span>
+
           {lesson.title}
+
         </div>
+
+
         <div className="accordion-right">
           1 lecture
         </div>
+
+
       </button>
 
       {
@@ -79,9 +89,14 @@ function CourseDetail() {
   }
 
   const handleToggleAll = () => {
+
     setAllOpen(!allOpen);
+
     setOpenSection(null);
+
   };
+
+
 
   const handleSectionToggle = (index) => {
     setOpenSection(
@@ -89,19 +104,31 @@ function CourseDetail() {
     );
   };
 
+
+
   const handleAddToCart = () => {
+
     setAddedToCart(!addedToCart);
+
   };
 
+
+
   return (
+
     <>
+
       <Navbar />
       <div className="course-detail-page">
         <div className="course-hero">
           <div className="course-breadcrumb">
+
             <a>Home</a>
+
             <span>/</span>
+
             <a>Learning</a>
+
             <span>/</span>
             <span className="active">
               Web Development
@@ -123,8 +150,12 @@ function CourseDetail() {
                 <span className="rating-meta">
                   (2 reviews) · Students enrolled
                 </span>
+
+
               </div>
               <div className="course-meta">
+
+
                 <p>
                   Created By{" "}
                   <span className="instructor-link">
@@ -135,11 +166,18 @@ function CourseDetail() {
                   🌐 English
                 </p>
               </div>
+
+
             </div>
             <div className="pricing-card">
+
+
               <div className="pricing-thumbnail">
+
                 <span>⚡</span>
+
                 <span>🟢</span>
+
               </div>
               <div className="pricing-body">
                 <p className="price">
@@ -152,8 +190,11 @@ function CourseDetail() {
                   Start Learning
                 </Link>
                 <button
+
                   className={`btn-cart ${addedToCart ? "added" : ""}`}
+
                   onClick={handleAddToCart}
+
                 >
                   {
                     addedToCart
@@ -167,8 +208,12 @@ function CourseDetail() {
                   30-Day Money-Back Guarantee
                 </p>
               </div>
+
+
             </div>
           </div>
+
+
         </div>
         <div className="course-body">
           <div className="learn-section">
@@ -184,6 +229,8 @@ function CourseDetail() {
               Course Content
             </h2>
             <div className="content-meta-row">
+
+
               <span>
                 {course.lessons.length} lecture(s)
               </span>
@@ -199,7 +246,15 @@ function CourseDetail() {
                     "Expand all sections"
                 }
               </button>
+
+
+
             </div>
+
+
+
+
+
 
             <div className="accordion-wrapper">
               {
@@ -217,11 +272,17 @@ function CourseDetail() {
                 ))
               }
             </div>
+
+
           </div>
         </div>
       </div>
+
+
     </>
+
   );
+
 }
 
 

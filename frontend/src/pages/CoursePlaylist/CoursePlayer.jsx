@@ -10,9 +10,10 @@ import { getCoursePlayer } from "../../services/courseService";
 
 import "./CoursePlayer.css";
 
+
 function CoursePlayer() {
+
   const { courseId } = useParams();
-  const navigate = useNavigate();
 
   const [course, setCourse] = useState(null);
   const [lessons, setLessons] = useState([]);
@@ -51,13 +52,26 @@ function CoursePlayer() {
   }
 
   return (
+
     <>
+
       <Navbar />
       <div className="player-page-container">
+
+
         <div className="learning-row">
+
+
           <div className="video-viewport-wrapper">
-            <VideoPlayer videoUrl={activeVideoUrl} />
+
+            <VideoPlayer
+              videoUrl={activeVideoUrl}
+            />
+
           </div>
+
+
+
 
           <div className="sidebar-list-wrapper">
             <CourseSidebar
@@ -67,14 +81,29 @@ function CoursePlayer() {
               }}
             />
           </div>
+
+
+
         </div>
+
+
+
+
 
         <div className="course-details-section">
           <CourseInfo course={course} />
         </div>
+
+
+
       </div>
+
+
+
     </>
+
   );
+
 }
 
 export default CoursePlayer;
